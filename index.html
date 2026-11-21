@@ -14,9 +14,9 @@
 
   <main>
     <section id="filters">
-      <button type="button">전체</button>
-      <button type="button">강아지</button>
-      <button type="button">고양이</button>
+      <button type="button" data-filter="all" class="active" aria-pressed="true">전체</button>
+      <button type="button" data-filter="dog" aria-pressed="false">강아지</button>
+      <button type="button" data-filter="cat" aria-pressed="false">고양이</button>
     </section>
 
     <section id="animals">
@@ -79,6 +79,27 @@
   <footer>
     <p>다시봄보호소</p>
   </footer>
+
+  <script>
+    var buttons = document.querySelectorAll('#filters button');
+    var cards = document.querySelectorAll('#animals .card');
+
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        var filter = button.dataset.filter;
+
+        buttons.forEach(function (b) {
+          var isActive = b === button;
+          b.classList.toggle('active', isActive);
+          b.setAttribute('aria-pressed', isActive);
+        });
+
+        cards.forEach(function (card) {
+          card.hidden = filter !== 'all' && card.dataset.type !== filter;
+        });
+      });
+    });
+  </script>
 
 </body>
 </html>
